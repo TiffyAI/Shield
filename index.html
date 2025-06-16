@@ -1,0 +1,55 @@
+<!-- TiffyAI Secure Window Shell -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🔐 TiffyAI Secure Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+    iframe {
+      width: 100vw;
+      height: 100vh;
+      border: none;
+      filter: drop-shadow(0 0 15px #00f6ff);
+      transition: filter 0.4s ease-in-out;
+    }
+  </style>
+</head>
+<body>
+  <iframe id="secure-content" src="https://tiffyai.co.za/?secure=true" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+
+  <script>
+    const frame = document.getElementById('secure-content');
+
+    // Scanner for referrer and UTM tracking
+    const urlParams = new URLSearchParams(window.location.search);
+    const ref = urlParams.get('ref') || 'direct';
+    const source = urlParams.get('utm_source') || 'organic';
+    const campaign = urlParams.get('utm_campaign') || 'none';
+
+    localStorage.setItem('tiffy_entry_ref', ref);
+    localStorage.setItem('tiffy_entry_source', source);
+    localStorage.setItem('tiffy_campaign', campaign);
+
+    console.log("[TiffyAI Secure Shell] Origin:", ref, source, campaign);
+
+    // Optionally block context menu for extra cloak
+    window.addEventListener("contextmenu", e => e.preventDefault());
+
+    // Optional: Delay reveal or animate activation
+    setTimeout(() => {
+      frame.style.filter = "drop-shadow(0 0 30px #00f6ff)";
+    }, 2000);
+  </script>
+</body>
+</html>
