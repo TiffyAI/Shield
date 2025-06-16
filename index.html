@@ -1,4 +1,4 @@
-<!-- TiffyAI Secure Window Shell -->
+<!-- TiffyAI Secure Window Shell with Idle Widget -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,13 +23,46 @@
       filter: drop-shadow(0 0 15px #00f6ff);
       transition: filter 0.4s ease-in-out;
     }
+    #tiffy-widget {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      z-index: 9999;
+      display: none;
+      cursor: pointer;
+      text-align: center;
+      animation: popIn 0.8s ease forwards;
+    }
+    #tiffy-widget img {
+      width: 120px;
+      filter: drop-shadow(0 0 12px #00f6ff);
+    }
+    #tiffy-widget p {
+      color: #00f6ff;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 14px;
+      margin-top: 8px;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 6px 12px;
+      border-radius: 12px;
+    }
+    @keyframes popIn {
+      from { transform: scale(0); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
   </style>
 </head>
 <body>
-  <iframe id="secure-content" src="https://tiffyai.co.za/?secure=true" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+  <iframe id="secure-content" src="https://www.tiffyai.co.za/?secure=true" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+
+  <div id="tiffy-widget">
+    <img src="TIFF.png" alt="TiffyAI Surprised">
+    <p>Do you want to get your hands on some really scarce TiffyAI tokens?</p>
+  </div>
 
   <script>
     const frame = document.getElementById('secure-content');
+    const widget = document.getElementById('tiffy-widget');
 
     // Scanner for referrer and UTM tracking
     const urlParams = new URLSearchParams(window.location.search);
@@ -50,6 +83,22 @@
     setTimeout(() => {
       frame.style.filter = "drop-shadow(0 0 30px #00f6ff)";
     }, 2000);
+
+    // Idle detection widget trigger
+    let userActive = false;
+    ["mousemove", "keydown", "click", "scroll", "touchstart"].forEach(evt => {
+      window.addEventListener(evt, () => userActive = true, { once: true });
+    });
+
+    setTimeout(() => {
+      if (!userActive) {
+        widget.style.display = 'block';
+      }
+    }, 35000); // 35 seconds idle
+
+    widget.addEventListener("click", () => {
+      window.location.href = "https://tiffyai.github.io/Dream-Menu/";
+    });
   </script>
 </body>
 </html>
